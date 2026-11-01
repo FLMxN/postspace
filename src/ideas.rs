@@ -1,6 +1,6 @@
 // ideas.rs
 
-pub fn assess(vector: [f64; 5]) {
+pub fn assess(vector: [f64; 5]) -> Vec<&'static str> {
     let [m, l, p, t, d] = vector;
 
     let ideas: Vec<(&str, bool)> = vec![
@@ -118,9 +118,12 @@ pub fn assess(vector: [f64; 5]) {
     ];
 
     println!("\nBased on your answers, you may be ideologically similar to:");
-    for (name, matched) in ideas {
-        if matched {
-            println!("{name}");
-        }
+    let matches: Vec<_> = ideas
+        .into_iter()
+        .filter_map(|(name, matched)| matched.then_some(name))
+        .collect();
+    for name in &matches {
+        println!("{name}");
     }
+    matches
 }

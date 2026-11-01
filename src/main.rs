@@ -2,6 +2,7 @@ mod assessment;
 mod axis;
 mod vectors;
 mod ideas;
+mod card;
 
 use assessment::{Question, all_questions};
 use crate::ideas::assess;
@@ -38,7 +39,54 @@ fn top_figures(vector: &[f64; Axis::ALL.len()], n: usize) -> Vec<(&'static vecto
 }
 
 fn main() {
+    let args: Vec<String> = std::env::args().skip(1).collect();
+    if matches!(args.as_slice(), [flag] if flag == "-h" || flag == "--help") {
+        print_usage();
+        return;
+    }
+
+    let vector = match parse_vector_args(&args) {
+        Ok(Some(vector)) => vector,
+        Ok(None) => run_questionnaire(),
+        Err(error) => {
+            eprintln!("{error}");
+            print_usage();
+            std::process::exit(2);
+        }
+    };
     let id = rand::random::<u32>();
+
+    println!("\nResults:");
+    println!(
+        "Profile {id}\n[{:+.2}, {:+.2}, {:+.2}, {:+.2}, {:+.2}]",
+        vector[0], vector[1], vector[2], vector[3], vector[4]
+    );
+    for axis in Axis::ALL {
+        let score = vector[axis.index()];
+        let pole = if score > 0.0 {
+            axis.positive_pole()
+        } else if score < 0.0 {
+            axis.negative_pole()
+        } else {
+            "balanced"
+        };
+        println!("{}: {score:+.2} ({pole})", axis.name());
+    }
+    let matched_ideas = assess(vector);
+
+    let top_3 = top_figures(&vector, 3);
+    println!("\nTop 3 closest figures:");
+    for (i, (fig, similarity)) in top_3.iter().enumerate() {
+        println!("{}. {} ({:.0}%)", i + 1, fig.name, similarity);
+    }
+
+    match card::render(&format!("№ {id}"), &vector, &matched_ideas, &top_3) {
+        Ok(path) => println!("\nResult card saved to {}", path.display()),
+        Err(error) => eprintln!("Could not render result card: {error}"),
+    }
+}
+
+fn run_questionnaire() -> [f64; Axis::ALL.len()] {
     let mut questions = all_questions();
     questions.shuffle(&mut rand::rng());
 
@@ -57,7 +105,7 @@ fn main() {
             );
             if io::stdout().flush().is_err() {
                 eprintln!("Could not write the question prompt.");
-                return;
+                std::process::exit(1);
             }
 
             let mut input = String::new();
@@ -77,38 +125,50 @@ fn main() {
                 },
                 Err(error) => {
                     eprintln!("Could not read your answer: {error}");
-                    return;
+                    std::process::exit(1);
                 }
             }
         }
     }
 
-    let vector: [f64; Axis::ALL.len()] =
-        std::array::from_fn(|index| normalize_score(scores[index], answered[index]));
+    std::array::from_fn(|index| normalize_score(scores[index], answered[index]))
+}
 
-    println!("\nResults:");
+fn parse_vector_args(args: &[String]) -> Result<Option<[f64; Axis::ALL.len()]>, String> {
+    if args.is_empty() {
+        return Ok(None);
+    }
+    if args[0] != "--vector" {
+        return Err(format!("Unknown argument: {}", args[0]));
+    }
+    if args.len() != Axis::ALL.len() + 1 {
+        return Err(format!(
+            "--vector requires exactly {} coordinates",
+            Axis::ALL.len()
+        ));
+    }
+
+    let mut vector = [0.0; Axis::ALL.len()];
+    for (index, value) in args[1..].iter().enumerate() {
+        let coordinate = value
+            .parse::<f64>()
+            .map_err(|_| format!("Coordinate {} is not a number: {value}", index + 1))?;
+        if !coordinate.is_finite() || !(-1.0..=1.0).contains(&coordinate) {
+            return Err(format!(
+                "Coordinate {} must be finite and between -1 and 1: {value}",
+                index + 1
+            ));
+        }
+        vector[index] = coordinate;
+    }
+    Ok(Some(vector))
+}
+
+fn print_usage() {
     println!(
-        "Profile {id}\n[{:+.2}, {:+.2}, {:+.2}, {:+.2}, {:+.2}]",
-        vector[0], vector[1], vector[2], vector[3], vector[4]
+        "Usage: postspace [--vector <market> <liberty> <progressivism> <transhumanism> <democracy>]"
     );
-    for axis in Axis::ALL {
-        let score = vector[axis.index()];
-        let pole = if score > 0.0 {
-            axis.positive_pole()
-        } else if score < 0.0 {
-            axis.negative_pole()
-        } else {
-            "balanced"
-        };
-        println!("{}: {score:+.2} ({pole})", axis.name());
-    }
-    assess(vector);
-    
-    let top_3 = top_figures(&vector, 3);
-    println!("\nTop 3 closest figures:");
-    for (i, (fig, similarity)) in top_3.iter().enumerate() {
-        println!("{}. {} ({:.0}%)", i + 1, fig.name, similarity);
-    }
+    println!("Without arguments, start the interactive quiz. Use --help for this message.");
 }
 
 fn parse_answer(input: &str) -> Option<i32> {
@@ -134,7 +194,7 @@ fn normalize_score(score: i32, answered: usize) -> f64 {
 
 #[cfg(test)]
 mod tests {
-    use super::{normalize_score, parse_answer, score_for};
+    use super::{normalize_score, parse_answer, parse_vector_args, score_for};
     use crate::assessment::{Pole, Question, all_questions};
     use crate::axis::Axis;
 
@@ -173,5 +233,22 @@ mod tests {
         assert_eq!(normalize_score(-8, 8), -1.0);
         assert_eq!(normalize_score(2, 4), 0.5);
         assert_eq!(normalize_score(0, 0), 0.0);
+    }
+
+    #[test]
+    fn parses_vector_arguments_and_rejects_invalid_coordinates() {
+        let args = ["--vector", "0.2", "-0.4", "0", "0.8", "-1"]
+            .map(String::from);
+        assert_eq!(
+            parse_vector_args(&args),
+            Ok(Some([0.2, -0.4, 0.0, 0.8, -1.0]))
+        );
+        assert_eq!(parse_vector_args(&[]), Ok(None));
+
+        let out_of_range = ["--vector", "0", "0", "1.1", "0", "0"].map(String::from);
+        assert!(parse_vector_args(&out_of_range).is_err());
+
+        let wrong_count = ["--vector", "0", "0"].map(String::from);
+        assert!(parse_vector_args(&wrong_count).is_err());
     }
 }
