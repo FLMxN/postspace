@@ -14,59 +14,59 @@ pub fn assess(vector: [f64; 5]) -> Vec<&'static str> {
         ("reactionary conservative",             m <  0.35 && l < -0.70 && p < -0.75 && d < -0.65),
 
         // ── Libertarian / crypto / exit ──
-        ("anarcho-capitalist",                   m >  0.75 && l >  0.75 && p <  0.4 && d > 0.60),
-        ("voluntaryist",                         m >  0.40 && l >  0.05 && p > -0.45 && p < 0.4 && d > 0.35),
-        ("crypto-anarchist",                     m >  0.65 && l >  0.75 && t >  0.35 && d > 0.50),
-        ("cyber-libertarian",                    m >  0.55 && l >  0.65 && t >  0.45 && d > 0.50),
-        ("seasteader / exit advocate",           m >  0.55 && l >  0.65 && t >  0.35 && p > -0.05 && d > 0.55),
-        ("paleolibertarian",                     m >  0.75 && l >  0.15 && p < -0.65 && d > 0.40),
-        ("mutualist",                            m < -0.15 && l >  0.75 && p >  0.15 && d > 0.60),
-        ("Georgist",                             m.abs() < 0.2 && l > 0.55 && p > 0.25 && d > 0.55),
-        ("egoist / Stirnerite",                  l >  0.85 && m.abs() < 0.55 && d > 0.55),
+        ("anarcho-capitalist",                   m >  0.80 && l >  0.85 && p <  0.4),
+        ("voluntaryist",                         m >  0.40 && l >  0.05 && p > -0.45 && p < 0.4),
+        ("crypto-anarchist",                     m >  0.65 && l >  0.75 && t >  0.35),
+        ("cyber-libertarian",                    m >  0.55 && l >  0.65 && t >  0.45),
+        ("seasteader / exit advocate",           m >  0.55 && l >  0.65 && t >  0.35 && p > -0.05),
+        ("paleolibertarian",                     m >  0.75 && l >  0.15 && p < -0.65),
+        ("mutualist",                            m < -0.15 && l >  0.75 && p >  0.15),
+        ("Georgist",                             m.abs() < 0.2 && l > 0.55 && p > 0.25),
+        ("egoist / Stirnerite",                  l >  0.85 && m.abs() < 0.55),
         ("techno-authoritarian libertarian",     m >  0.75 && l > -0.60 && t >  0.80 && d <  0.30),
         ("classical liberal conservative",       m >  0.35 && l > -0.20 && p < -0.55 && d > 0.10),
         ("traditional liberal",                  m >  0.70 && l >  0.30 && p < -0.50 && d >  0.10),
 
         // ── Left-anarchist / post-left ──
-        ("anarcho-communist",                    m <= -0.75 && l > 0.65 && p > 0.65 && d > 0.75),
-        ("anarcho-syndicalist",                  m <= -0.60 && l > 0.65 && p > 0.45 && t < 0.3 && d > 0.65),
+        ("anarcho-communist",                    m <= -0.75 && l > 0.65 && p > 0.65),
+        ("anarcho-syndicalist",                  m <= -0.60 && l > 0.65 && p > 0.45 && t < 0.3),
         ("council communist",                    m < -0.75 && l > 0.45 && p > 0.55 && d > 0.70),
-        ("platformist",                          m < -0.60 && l > 0.55 && p > 0.45 && d > 0.65),
-        ("insurrectionist anarchist",            m < -0.45 && l > 0.85 && p > 0.35 && d > 0.70),
-        ("situationist / post-leftist",          m < -0.45 && l > 0.65 && p > 0.35 && d > 0.65),
+        ("platformist",                          m < -0.60 && l > 0.55 && p > 0.45),
+        ("insurrectionist anarchist",            m < -0.45 && l > 0.85 && p > 0.35),
+        ("situationist / post-leftist",          m < -0.45 && l > 0.65 && p > 0.35),
         ("democratic confederalist (Öcalan-style)", m < -0.45 && l > 0.65 && p > 0.55 && d > 0.80),
         ("communalist (Bookchin-style)",         m < -0.50 && l > 0.65 && p > 0.55 && d > 0.75),
         ("social ecologist",                     m < -0.40 && l > 0.65 && p > 0.45 && t < 0.3 && d > 0.65),
-        ("anti-work / post-work advocate",       m < -0.40 && l > 0.55 && p > 0.55 && t > 0.45 && d > 0.65),
+        ("anti-work / post-work advocate",       m < -0.40 && l > 0.55 && p > 0.55 && t > 0.45),
 
         // ── Anarcho-primitivism / anti-civ / deep green ──
-        ("anarcho-primitivist",                  m < -0.55 && l > 0.65 && t < -0.75 && d > 0.55),
-        ("anti-civ rewilding advocate",          m < -0.45 && l > 0.55 && t < -0.75 && d > 0.50),
-        ("neo-Luddite",                          l >  0.45 && t < -0.85 && d > 0.45),
-        ("deep ecologist / Earth First!-style",  m < -0.50 && l > 0.55 && p > 0.35 && t < -0.65 && d > 0.55),
+        ("anarcho-primitivist",                  m < -0.55 && l > 0.65 && t < -0.75),
+        ("anti-civ rewilding advocate",          m < -0.45 && l > 0.55 && t < -0.75),
+        ("neo-Luddite",                          l >  0.45 && t < -0.85),
+        ("deep ecologist / Earth First!-style",  m < -0.50 && l > 0.55 && p > 0.35 && t < -0.65),
 
         // ── Accelerationism / futures ──
-        ("left accelerationist",                 m < -0.50 && l > 0.40 && p > 0.65 && t > 0.60 && d > 0.55),
-        ("FALGSC (fully automated luxury gay space communist)", m < -0.60 && l > 0.40 && p > 0.80 && t > 0.60 && d > 0.70),
-        ("post-scarcity communist",              m < -0.60 && l > 0.10 && p > 0.50 && t > 0.60 && d > 0.65),
-        ("techno-socialist",                     m < -0.50 && l > 0.10 && p > 0.50 && t > 0.60 && d > 0.60),
-        ("singularitarian",                      t >  0.60 && m > -0.25 && l > -0.25 && d > 0.10),
-        ("anarcho-transhumanist",                l >  0.80 && t >  0.80 && d > 0.75),
+        ("left accelerationist",                 m < -0.50 && l > 0.40 && p > 0.65 && t > 0.60),
+        ("FALGSC (fully automated luxury gay space communist)", m < -0.60 && l > 0.40 && p > 0.80 && t > 0.60),
+        ("post-scarcity communist",              m < -0.60 && l > 0.10 && p > 0.50 && t > 0.60),
+        ("techno-socialist",                     m < -0.50 && l > 0.10 && p > 0.50 && t > 0.60),
+        ("singularitarian",                      t >  0.60 && m > -0.25 && l > -0.25),
+        ("anarcho-transhumanist",                l >  0.80 && t >  0.80),
         ("technocratic transhumanist",           l < -0.30 && t >  0.80 && d < -0.35),
         ("cyberocracy advocate / AI-state",      l < -0.40 && p >  0.10 && t > 0.60 && d < -0.65),
         ("techno-feudalist",                     m >  0.55 && l < -0.55 && t > 0.40 && d < -0.60),
         ("neocameralist",                        m >  0.50 && l < -0.50 && t > -0.10 && d < -0.55),
         ("xenofeminist",                         l >  0.10 && p >  0.70 && t > 0.70 && d > 0.65),
         ("cyberfeminist",                        l >  0.10 && p >  0.60 && t > 0.60 && d > 0.60),
-        ("post-genderist",                       p >  0.80 && t >  0.50 && d > 0.55),
+        ("post-genderist",                       p >  0.80 && t >  0.50),
 
         // ── Green-tech / governance futures ──
-        ("ecomodernist",                         m >  0.10 && l > 0.10 && p > 0.30 && t > 0.60 && d > 0.45),
+        ("ecomodernist",                         m >  0.10 && l > 0.10 && p > 0.30 && t > 0.60),
         ("solarpunk",                            m < -0.30 && l > 0.10 && p > 0.50 && t > 0.50 && d > 0.70),
         ("lunarpunk",                            m < -0.30 && l > 0.30 && p > 0.40 && t > 0.40 && t < 0.75 && d > 0.65),
         ("degrowth advocate",                    m < -0.40 && p > 0.40 && t < 0.15 && d > 0.50),
-        ("longtermist",                          m.abs() < 0.45 && l > 0.40 && p > 0.40 && t > 0.60 && d > 0.50),
-        ("effective altruist",                   m >  0.30 && l > 0.40 && p > 0.50 && t > 0.40 && d > 0.55),
+        ("longtermist",                          m.abs() < 0.45 && l > 0.40 && p > 0.40 && t > 0.60),
+        ("effective altruist",                   m >  0.30 && l > 0.40 && p > 0.50 && t > 0.40),
         ("futarchist",                           m >  0.60 && l > 0.40 && d > 0.40),
         ("lottocratic / sortitionist",           m <  0.25 && l > 0.30 && p > 0.30 && d > 0.80),
         ("liquid democracy advocate",            l >  0.50 && p > 0.35 && d > 0.65),
@@ -76,8 +76,8 @@ pub fn assess(vector: [f64; 5]) -> Vec<&'static str> {
         ("God-builder (bogostroitel)",           m < -0.40 && p > 0.30 && t > 0.45 && t < 0.70 && d > 0.20),
 
         // ── Bioconservatism / anti-enhancement ──
-        ("bioconservative",                      t < -0.60 && p < -0.40 && d < -0.25),
-        ("religious bioconservative",            t < -0.80 && p < -0.60 && d < -0.40),
+        ("bioconservative",                      t < -0.60 && p < -0.40),
+        ("religious bioconservative",            t < -0.80 && p < -0.60),
         ("left bioconservative",                 m < -0.40 && p > 0.50 && t < -0.40 && d > 0.35),
 
         // ── Traditionalist / authoritarian right ──
@@ -126,4 +126,36 @@ pub fn assess(vector: [f64; 5]) -> Vec<&'static str> {
         println!("{name}");
     }
     matches
+}
+
+#[cfg(test)]
+mod tests {
+    use super::assess;
+
+    #[test]
+    fn anarcho_capitalism_does_not_require_democratic_preferences() {
+        let matches = assess([0.9, 0.9, 0.0, 0.5, -0.8]);
+
+        assert!(matches.contains(&"anarcho-capitalist"));
+        assert!(matches.contains(&"voluntaryist"));
+        assert!(matches.contains(&"crypto-anarchist"));
+    }
+
+    #[test]
+    fn anarcho_communism_does_not_require_electoral_democracy() {
+        let matches = assess([-0.8, 0.9, 0.8, 0.2, -0.8]);
+
+        assert!(matches.contains(&"anarcho-communist"));
+        assert!(matches.contains(&"anarcho-syndicalist"));
+    }
+
+    #[test]
+    fn futurist_and_social_ideas_do_not_require_democratic_preferences() {
+        let matches = assess([0.2, 0.5, 0.9, 0.7, -0.8]);
+
+        assert!(matches.contains(&"singularitarian"));
+        assert!(matches.contains(&"post-genderist"));
+        assert!(matches.contains(&"ecomodernist"));
+        assert!(matches.contains(&"longtermist"));
+    }
 }

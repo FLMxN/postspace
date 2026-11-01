@@ -25,10 +25,10 @@ const fn profile(
 
 pub const FIGURES: &[Figure] = &[
     // ── Neoreaction / Dark Enlightenment ────────────────────────────────
-    profile("Curtis Yarvin (Mencius Moldbug)", 0.45, -0.85, -0.90, 0.10, -0.95),
-    profile("Nick Land", 0.90, -0.70, -0.75, 0.95, -0.90),
+    profile("Curtis Yarvin (Mencius Moldbug)", 0.65, -0.45, -0.90, 0.10, -0.95),
+    profile("Nick Land", 0.90, 0.25, -0.75, 0.95, -0.90),
     profile("Hans-Hermann Hoppe", 0.95, -0.70, -0.80, 0.05, -0.80),
-    profile("Michael Anissimov", 0.45, -0.85, -0.85, 0.35, -0.90),
+    profile("Michael Anissimov", 0.45, 0.25, -0.85, 0.35, -0.90),
     profile("Spandrell", 0.25, -0.90, -0.90, 0.00, -0.90),
     profile("Steve Sailer", 0.20, -0.75, -0.90, -0.05, -0.70),
 
@@ -63,8 +63,8 @@ pub const FIGURES: &[Figure] = &[
     profile("Ray Brassier", -0.10, 0.40, 0.25, 0.65, 0.20),
 
     // ── Classical liberal / libertarian / techno‑optimist ──────────────
-    profile("Ayn Rand", 0.95, 0.90, -0.40, 0.35, 0.65),
-    profile("Peter Thiel", 0.90, -0.50, -0.55, 0.95, 0.20),
+    profile("Ayn Rand", 0.95, 0.90, -0.40, 0.35, 0.15),
+    profile("Peter Thiel", 0.90, 0.75, -0.55, 0.95, -0.55),
 
     // ── Traditionalist / authoritarian right ───────────────────────────
     profile("Julius Evola", -0.80, -0.95, -0.95, -0.80, -0.95),
@@ -77,10 +77,13 @@ pub const FIGURES: &[Figure] = &[
     profile("Andrew Tate", -0.20, -0.85, -0.90, -0.30, -0.80),
     profile("Candace Owens", 0.30, -0.30, -0.85, -0.15, -0.50),
     profile("Sneako (Nicolas Kenn De Balinthazy)", -0.10, -0.75, -0.80, -0.20, -0.70),
+    profile("xQc (Félix Lengyel)", 0.00, 0.20, 0.05, 0.00, 0.10),
+    profile("Asmongold (Zack Hoyt)", 0.10, 0.15, -0.30, 0.00, 0.10),
+    profile("Markiplier (Mark Fischbach)", 0.10, 0.35, 0.55, 0.05, 0.25),
 
     // ── Political leaders / statespeople ─────────────────────────────
     profile("Javier Milei", 1.00, 0.65, -0.35, 0.15, 0.55),
-    profile("Donald Trump", 0.35, -0.50, -0.80, 0.10, -0.50),
+    profile("Donald Trump", 0.05, -0.50, -0.80, 0.10, -0.80),
     profile("Bernie Sanders", -0.65, 0.70, 0.90, 0.20, 0.85),
     profile("Alexei Navalny", 0.35, 0.75, 0.45, 0.10, 0.80),
     profile("Deng Xiaoping", 0.30, -0.85, -0.15, 0.15, -0.90),
