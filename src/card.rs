@@ -50,20 +50,11 @@ pub fn render(
             vec![(72, 270), (1128, 270)],
             MUTED.mix(0.35),
         ))?;
-        // root.draw(&Text::new(
-        //     "YOUR FIVE AXES",
-        //     (120, 295),
-        //     ("sans-serif", 32)
-        //         .into_font()
-        //         .style(FontStyle::Bold)
-        //         .color(&TEXT),
-        // ))?;
-
         let track_left = 120;
         let track_right = 1080;
         let center = (track_left + track_right) / 2;
         for (index, axis) in Axis::ALL.iter().enumerate() {
-            let top = 370 + index as i32 * 112;
+            let top = 326 + index as i32 * 88;
             let value = vector[axis.index()].clamp(-1.0, 1.0);
             let color = if value >= 0.0 { POSITIVE } else { NEGATIVE };
             root.draw(&Text::new(
@@ -206,7 +197,7 @@ mod tests {
     #[test]
     fn renders_portrait_result_card() {
         let token = format!("card-test-{}", std::process::id());
-        let path = render(&token, &[0.2, -0.4, 0.0, 0.8, -1.0], &[], &[])
+        let path = render(&token, &[0.2, -0.4, 0.0, 0.8, -1.0, 0.3, -0.6], &[], &[])
             .expect("result card should render");
         let png = fs::read(&path).expect("rendered card should exist");
         assert!(png.starts_with(b"\x89PNG\r\n\x1a\n"));

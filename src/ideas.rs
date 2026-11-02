@@ -1,13 +1,16 @@
 // ideas.rs
 
-pub fn assess(vector: [f64; 5]) -> Vec<&'static str> {
-    let [m, l, p, t, d] = vector;
+use rand::rngs;
+
+pub fn assess(vector: [f64; crate::axis::Axis::ALL.len()]) -> Vec<&'static str> {
+    let [m, l, p, t, d, g, r] = vector;
 
     let ideas: Vec<(&str, bool)> = vec![
+
         // ── Neoreaction / Dark Enlightenment ──
         ("neoreactionary (NRx)",                 m >  0.20 && l < -0.65 && p < -0.65 && d < -0.65),
         ("Moldbuggian neocameralist",            m >  0.40 && l < -0.80 && p < -0.80 && d < -0.80),
-        ("Landian accelerationist",              m >  0.65 && l < -0.60 && p < -0.40 && t > 0.65 && d < -0.65),
+        ("Landian accelerationist",              m >  0.65 && l < -0.60 && p < -0.40 && t > 0.65 && d < -0.65 && g > 0.30),
         ("Dark Enlightenment techno-monarchist", m >  0.55 && l < -0.85 && t > 0.75 && d < -0.85),
         ("Bronze Age mindset (BAPist)",          m.abs() < 0.2 && l < -0.90 && p < -0.85 && t < 0.1 && d < -0.85),
         ("Hoppean",                              m >  0.85 && l < -0.50 && p < -0.60 && d < -0.60),
@@ -32,7 +35,7 @@ pub fn assess(vector: [f64; 5]) -> Vec<&'static str> {
         ("anarcho-syndicalist",                  m <= -0.60 && l > 0.65 && p > 0.45 && t < 0.3),
         ("council communist",                    m < -0.75 && l > 0.45 && p > 0.55 && d > 0.70),
         ("platformist",                          m < -0.60 && l > 0.55 && p > 0.45),
-        ("insurrectionist anarchist",            m < -0.45 && l > 0.85 && p > 0.35),
+        ("insurrectionist anarchist",            m < -0.45 && l > 0.85 && p > 0.35 && r > 0.35),
         ("situationist / post-leftist",          m < -0.45 && l > 0.65 && p > 0.35),
         ("democratic confederalist (Öcalan-style)", m < -0.45 && l > 0.65 && p > 0.55 && d > 0.80),
         ("communalist (Bookchin-style)",         m < -0.50 && l > 0.65 && p > 0.55 && d > 0.75),
@@ -66,7 +69,7 @@ pub fn assess(vector: [f64; 5]) -> Vec<&'static str> {
         ("lunarpunk",                            m < -0.30 && l > 0.30 && p > 0.40 && t > 0.40 && t < 0.75 && d > 0.65),
         ("degrowth advocate",                    m < -0.40 && p > 0.40 && t < 0.15 && d > 0.50),
         ("longtermist",                          m.abs() < 0.45 && l > 0.40 && p > 0.40 && t > 0.60),
-        ("effective altruist",                   m >  0.30 && l > 0.40 && p > 0.50 && t > 0.40),
+        ("effective altruist",                   m >  0.30 && l > 0.40 && p > 0.50 && t > 0.40 && g < 0.20),
         ("futarchist",                           m >  0.60 && l > 0.40 && d > 0.40),
         ("lottocratic / sortitionist",           m <  0.25 && l > 0.30 && p > 0.30 && d > 0.80),
         ("liquid democracy advocate",            l >  0.50 && p > 0.35 && d > 0.65),
@@ -103,14 +106,17 @@ pub fn assess(vector: [f64; 5]) -> Vec<&'static str> {
         ("authoritarian state capitalist",       m < 0.1 && m > -0.5 && l < -0.85 && p < -0.50 && d < -0.85),
 
         // ── Marxist-Leninist / 20th-century left ──
-        ("Marxist-Leninist (vanguardist)",       m < -0.85 && l < -0.80 && p > -0.20 && d < -0.65),
-        ("Trotskyist",                           m < -0.85 && l < -0.45 && p > 0.50 && d > -0.90),
-        ("Maoist",                               m < -0.85 && l < -0.80 && p < 0.25 && d < -0.75),
-        ("Hoxhaist",                             m < -0.90 && l < -0.85 && p < 0.15 && d < -0.80),
+        ("Marxist-Leninist (vanguardist)",       m < -0.85 && l < -0.80 && p > -0.20 && d < -0.65 && r > 0.45),
+        ("Trotskyist",                           m < -0.85 && l < -0.45 && p > 0.50 && d > -0.90 && r > 0.45),
+        ("Maoist",                               m < -0.85 && l < -0.80 && p < 0.25 && d < -0.75 && r > 0.45),
+        ("Hoxhaist",                             m < -0.90 && l < -0.85 && p < 0.15 && d < -0.80 && r > 0.45),
         ("Juche",                                m < -0.70 && l < -0.80 && p < -0.40 && d < -0.90),
         ("Ba'athist",                            m < -0.60 && l < -0.80 && p > -0.10 && p < 0.35 && d < -0.75),
         ("Chavista / Bolivarian",                m < -0.60 && l < -0.60 && p > 0.20 && d > 0.15),
         ("Peronist",                             m < -0.40 && l < -0.50 && p > -0.15 && p < 0.35 && d > 0.05),
+
+        ("social democrat",                      m < -0.30 && l > 0.20 && d > 0.50 && r < -0.35 && g < 0.35),
+        ("reformist liberal",                    m >  0.10 && l > 0.30 && d > 0.40 && r < -0.35 && g < 0.35),
 
         // ── Religious authoritarian ──
         ("Islamic theocrat",                     l < -0.80 && p < -0.80 && d < -0.85),
@@ -133,8 +139,27 @@ mod tests {
     use super::assess;
 
     #[test]
+    fn speculative_style_and_reformism_affect_ideology_matches() {
+        let speculative = assess([0.8, -0.8, -0.5, 0.9, -0.8, 0.8, 0.0]);
+        let reformist = assess([-0.8, 0.7, 0.8, 0.2, 0.9, 0.0, -0.8]);
+
+        assert!(speculative.contains(&"Landian accelerationist"));
+        assert!(reformist.contains(&"social democrat"));
+        assert!(!reformist.contains(&"Landian accelerationist"));
+    }
+
+    #[test]
+    fn revolutionary_traditions_require_a_revolutionary_score() {
+        let revolutionary = assess([-0.9, -0.9, 0.1, 0.0, -0.9, 0.0, 0.8]);
+        let reformist = assess([-0.9, -0.9, 0.1, 0.0, -0.9, 0.0, -0.8]);
+
+        assert!(revolutionary.contains(&"Marxist-Leninist (vanguardist)"));
+        assert!(!reformist.contains(&"Marxist-Leninist (vanguardist)"));
+    }
+
+    #[test]
     fn anarcho_capitalism_does_not_require_democratic_preferences() {
-        let matches = assess([0.9, 0.9, 0.0, 0.5, -0.8]);
+        let matches = assess([0.9, 0.9, 0.0, 0.5, -0.8, 0.0, 0.0]);
 
         assert!(matches.contains(&"anarcho-capitalist"));
         assert!(matches.contains(&"voluntaryist"));
@@ -143,7 +168,7 @@ mod tests {
 
     #[test]
     fn anarcho_communism_does_not_require_electoral_democracy() {
-        let matches = assess([-0.8, 0.9, 0.8, 0.2, -0.8]);
+        let matches = assess([-0.8, 0.9, 0.8, 0.2, -0.8, 0.0, 0.0]);
 
         assert!(matches.contains(&"anarcho-communist"));
         assert!(matches.contains(&"anarcho-syndicalist"));
@@ -151,7 +176,7 @@ mod tests {
 
     #[test]
     fn futurist_and_social_ideas_do_not_require_democratic_preferences() {
-        let matches = assess([0.2, 0.5, 0.9, 0.7, -0.8]);
+        let matches = assess([0.2, 0.5, 0.9, 0.7, -0.8, 0.0, 0.0]);
 
         assert!(matches.contains(&"singularitarian"));
         assert!(matches.contains(&"post-genderist"));

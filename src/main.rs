@@ -1,11 +1,11 @@
 mod assessment;
 mod axis;
-mod vectors;
-mod ideas;
 mod card;
+mod ideas;
+mod vectors;
 
-use assessment::{Question, all_questions};
 use crate::ideas::assess;
+use assessment::{all_questions, Question};
 use axis::Axis;
 use rand::seq::SliceRandom;
 use std::io::{self, Write};
@@ -18,7 +18,7 @@ fn euclidean_distance_sq(a: &[f64; Axis::ALL.len()], b: &[f64; Axis::ALL.len()])
 }
 
 fn similarity_percentage(dist_sq: f64) -> f64 {
-    const MAX_DIST_SQ: f64 = 20.0; // 5 dimensions, each ranging from -1 to 1, so max diff is 2 per dimension
+    const MAX_DIST_SQ: f64 = Axis::ALL.len() as f64 * 4.0;
     ((1.0 - dist_sq / MAX_DIST_SQ) * 100.0).round()
 }
 
@@ -57,10 +57,12 @@ fn main() {
     let id = rand::random::<u32>();
 
     println!("\nResults:");
-    println!(
-        "Profile {id}\n[{:+.2}, {:+.2}, {:+.2}, {:+.2}, {:+.2}]",
-        vector[0], vector[1], vector[2], vector[3], vector[4]
-    );
+    let coordinates = vector
+        .iter()
+        .map(|value| format!("{value:+.2}"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    println!("Profile {id}\n[{coordinates}]");
     for axis in Axis::ALL {
         let score = vector[axis.index()];
         let pole = if score > 0.0 {
@@ -93,7 +95,9 @@ fn run_questionnaire() -> [f64; Axis::ALL.len()] {
     let mut scores = [0; Axis::ALL.len()];
     let mut answered = [0; Axis::ALL.len()];
 
-    println!("Answer with y/n/x or 1/-1/0. y and 1 mean yes; n and -1 mean no; x and 0 mean neutral.");
+    println!(
+        "Answer with y/n/x or 1/-1/0. y and 1 mean yes; n and -1 mean no; x and 0 mean neutral."
+    );
 
     'questions: for (index, question) in questions.iter().enumerate() {
         loop {
@@ -166,7 +170,7 @@ fn parse_vector_args(args: &[String]) -> Result<Option<[f64; Axis::ALL.len()]>, 
 
 fn print_usage() {
     println!(
-        "Usage: postspace [--vector <market> <liberty> <progressivism> <transhumanism> <democracy>]"
+        "Usage: postspace [--vector <market> <liberty> <progressivism> <transhumanism> <democracy> <delusionality> <revolutionism>]"
     );
     println!("Without arguments, start the interactive quiz. Use --help for this message.");
 }
@@ -195,7 +199,7 @@ fn normalize_score(score: i32, answered: usize) -> f64 {
 #[cfg(test)]
 mod tests {
     use super::{normalize_score, parse_answer, parse_vector_args, score_for};
-    use crate::assessment::{Pole, Question, all_questions};
+    use crate::assessment::{all_questions, Pole, Question};
     use crate::axis::Axis;
 
     #[test]
@@ -223,8 +227,8 @@ mod tests {
     }
 
     #[test]
-    fn question_bank_has_eighty_questions() {
-        assert_eq!(all_questions().len(), 80);
+    fn question_bank_has_eighty_four_questions() {
+        assert_eq!(all_questions().len(), 84);
     }
 
     #[test]
@@ -237,15 +241,14 @@ mod tests {
 
     #[test]
     fn parses_vector_arguments_and_rejects_invalid_coordinates() {
-        let args = ["--vector", "0.2", "-0.4", "0", "0.8", "-1"]
-            .map(String::from);
+        let args = ["--vector", "0.2", "-0.4", "0", "0.8", "-1", "0.5", "-0.25"].map(String::from);
         assert_eq!(
             parse_vector_args(&args),
-            Ok(Some([0.2, -0.4, 0.0, 0.8, -1.0]))
+            Ok(Some([0.2, -0.4, 0.0, 0.8, -1.0, 0.5, -0.25]))
         );
         assert_eq!(parse_vector_args(&[]), Ok(None));
 
-        let out_of_range = ["--vector", "0", "0", "1.1", "0", "0"].map(String::from);
+        let out_of_range = ["--vector", "0", "0", "1.1", "0", "0", "0", "0"].map(String::from);
         assert!(parse_vector_args(&out_of_range).is_err());
 
         let wrong_count = ["--vector", "0", "0"].map(String::from);
