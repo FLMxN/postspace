@@ -34,6 +34,7 @@ const ui = {
 const figures = rustFigures.map(f => ({ ...f, ru: f.name, en: f.name }))
 const ideas = rustIdeas.map(({ name, matches }) => [name, name, matches])
 const dot=(a,b)=>a.reduce((s,x,i)=>s+(x-b[i])**2,0)
+const cosineSimilarity=(a,b)=>{const product=a.reduce((sum,x,i)=>sum+x*b[i],0);const normA=Math.sqrt(a.reduce((sum,x)=>sum+x*x,0));const normB=Math.sqrt(b.reduce((sum,x)=>sum+x*x,0));return normA*normB===0?0:product/(normA*normB)}
 
 function App() {
   const [lang,setLang]=useState(()=>localStorage.getItem('postspace-lang')==='en'?'en':'ru')
@@ -45,7 +46,7 @@ function App() {
   const questions=lang==='ru'?questionsRu:questionsEn
   const result=useMemo(()=>vector??axisData.map((_,ai)=>{let score=0,count=0;questionsEn.forEach((q,i)=>{if(q.axis===ai&&answers[i]!==undefined){score+=answers[i]*q.pole;count++}});return count?Math.max(-1,Math.min(1,score/count)):0}),[vector,answers])
   const matches=useMemo(()=>ideas.filter(([, ,rule])=>rule(result)),[result])
-  const nearest=useMemo(()=>figures.map(f=>({...f,similarity:Math.max(0,Math.round((1-dot(result,f.v)/28)*100))})).sort((a,b)=>dot(result,a.v)-dot(result,b.v)).slice(0,3),[result])
+  const nearest=useMemo(()=>figures.map(f=>{const distance=dot(result,f.v);const distanceScore=1-distance/28;const score=distanceScore*cosineSimilarity(result,f.v);return {...f,distance,score,similarity:Math.max(0,Math.min(100,Math.round(score*100)))}}).sort((a,b)=>b.score-a.score||a.distance-b.distance).slice(0,5),[result])
   const switchLanguage=()=>{const next=lang==='ru'?'en':'ru';setLang(next);localStorage.setItem('postspace-lang',next);document.documentElement.lang=next}
   const answer=value=>{const next={...answers,[index]:value};setAnswers(next);if(index<questions.length-1)setIndex(index+1);else{setVector(null);setScreen('result')}}
   const begin=()=>{setAnswers({});setIndex(0);setVector(null);setScreen('quiz')}

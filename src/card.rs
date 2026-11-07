@@ -149,17 +149,17 @@ pub fn render(
                 .style(FontStyle::Bold)
                 .color(&TEXT),
         ))?;
-        for (index, (figure, similarity)) in top_figures.iter().take(3).enumerate() {
-            let y = 1422 + index as i32 * 48;
+        for (index, (figure, similarity)) in top_figures.iter().take(5).enumerate() {
+            let y = 1414 + index as i32 * 30;
             root.draw(&Text::new(
                 format!("{}. {}", index + 1, figure.name),
                 (76, y),
-                ("sans-serif", 32).into_font().color(&TEXT),
+                ("sans-serif", 26).into_font().color(&TEXT),
             ))?;
             root.draw(&Text::new(
                 format!("{similarity:.0}%"),
                 (1040, y),
-                ("sans-serif", 32).into_font().color(&POSITIVE),
+                ("sans-serif", 26).into_font().color(&POSITIVE),
             ))?;
         }
         root.draw(&Text::new(

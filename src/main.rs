@@ -17,9 +17,23 @@ fn euclidean_distance_sq(a: &[f64; Axis::ALL.len()], b: &[f64; Axis::ALL.len()])
         .sum::<f64>()
 }
 
-fn similarity_percentage(dist_sq: f64) -> f64 {
+fn cosine_similarity(a: &[f64; Axis::ALL.len()], b: &[f64; Axis::ALL.len()]) -> f64 {
+    let dot = a.iter().zip(b.iter()).map(|(x, y)| x * y).sum::<f64>();
+    let norm_a = a.iter().map(|x| x * x).sum::<f64>().sqrt();
+    let norm_b = b.iter().map(|x| x * x).sum::<f64>().sqrt();
+    let denominator = norm_a * norm_b;
+    if denominator == 0.0 { 0.0 } else { dot / denominator }
+}
+
+fn similarity_score(dist_sq: f64, cosine: f64) -> f64 {
     const MAX_DIST_SQ: f64 = Axis::ALL.len() as f64 * 4.0;
-    ((1.0 - dist_sq / MAX_DIST_SQ) * 100.0).round()
+    (1.0 - dist_sq / MAX_DIST_SQ) * cosine
+}
+
+fn similarity_percentage(score: f64) -> f64 {
+    (score * 100.0)
+        .round()
+        .clamp(0.0, 100.0)
 }
 
 fn top_figures(vector: &[f64; Axis::ALL.len()], n: usize) -> Vec<(&'static vectors::Figure, f64)> {
@@ -27,14 +41,20 @@ fn top_figures(vector: &[f64; Axis::ALL.len()], n: usize) -> Vec<(&'static vecto
         .iter()
         .map(|fig| {
             let dist_sq = euclidean_distance_sq(&fig.vector, vector);
-            (fig, dist_sq)
+            let cosine = cosine_similarity(&fig.vector, vector);
+            let score = similarity_score(dist_sq, cosine);
+            (fig, dist_sq, score)
         })
         .collect();
-    figures.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
+    figures.sort_by(|a, b| {
+        b.2.partial_cmp(&a.2)
+            .unwrap()
+            .then_with(|| a.1.partial_cmp(&b.1).unwrap())
+    });
     figures
         .into_iter()
         .take(n)
-        .map(|(fig, dist_sq)| (fig, similarity_percentage(dist_sq)))
+        .map(|(fig, _, score)| (fig, similarity_percentage(score)))
         .collect()
 }
 
@@ -76,13 +96,13 @@ fn main() {
     }
     let matched_ideas = assess(vector);
 
-    let top_3 = top_figures(&vector, 3);
-    println!("\nTop 3 closest figures:");
-    for (i, (fig, similarity)) in top_3.iter().enumerate() {
+    let top_5 = top_figures(&vector, 5);
+    println!("\nTop 5 closest figures:");
+    for (i, (fig, similarity)) in top_5.iter().enumerate() {
         println!("{}. {} ({:.0}%)", i + 1, fig.name, similarity);
     }
 
-    match card::render(&format!("№ {id}"), &vector, &matched_ideas, &top_3) {
+    match card::render(&format!("№ {id}"), &vector, &matched_ideas, &top_5) {
         Ok(path) => println!("\nResult card saved to {}", path.display()),
         Err(error) => eprintln!("Could not render result card: {error}"),
     }
