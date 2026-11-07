@@ -1,2 +1,4 @@
 /target
 /cards
+/node_modules
+/dist

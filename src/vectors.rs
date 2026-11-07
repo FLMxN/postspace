@@ -302,8 +302,7 @@ mod tests {
     #[test]
     fn figure_scores_match_representative_calibrations() {
         let lenin = find_figure("Vladimir Lenin").expect("Lenin profile should exist");
-        let negarestani =
-            find_figure("Reza Negarestani").expect("Negarestani profile should exist");
+        let negarestani = find_figure("Reza Negarestani").expect("Negarestani profile should exist");
         let sanders = find_figure("Bernie Sanders").expect("Sanders profile should exist");
         let milei = find_figure("Javier Milei").expect("Milei profile should exist");
         let xi = find_figure("Xi Jinping").expect("Xi profile should exist");

@@ -8,7 +8,7 @@ pub fn assess(vector: [f64; crate::axis::Axis::ALL.len()]) -> Vec<&'static str> 
     let ideas: Vec<(&str, bool)> = vec![
 
         // ── Neoreaction / Dark Enlightenment ──
-        ("neoreactionary (NRx)",                 m >  0.20 && l < -0.65 && p < -0.65 && d < -0.65),
+        ("neoreactionary (NRx)",                 m >  0.20 && p < -0.65 && d < -0.65),
         ("Moldbuggian neocameralist",            m >  0.40 && l < -0.80 && p < -0.80 && d < -0.80),
         ("Landian accelerationist",              m >  0.65 && l < -0.60 && p < -0.40 && t > 0.65 && d < -0.65 && g > 0.30),
         ("Dark Enlightenment techno-monarchist", m >  0.55 && l < -0.85 && t > 0.75 && d < -0.85),
@@ -64,7 +64,7 @@ pub fn assess(vector: [f64; crate::axis::Axis::ALL.len()]) -> Vec<&'static str> 
         ("post-genderist",                       p >  0.80 && t >  0.50),
 
         // ── Green-tech / governance futures ──
-        ("ecomodernist",                         m >  0.10 && l > 0.10 && p > 0.30 && t > 0.60),
+        ("ecomodernist",                         m >  0.10 && l > 0.10 && p > 0.30 && t < 0.75),
         ("solarpunk",                            m < -0.30 && l > 0.10 && p > 0.50 && t > 0.50 && d > 0.70),
         ("lunarpunk",                            m < -0.30 && l > 0.30 && p > 0.40 && t > 0.40 && t < 0.75 && d > 0.65),
         ("degrowth advocate",                    m < -0.40 && p > 0.40 && t < 0.15 && d > 0.50),

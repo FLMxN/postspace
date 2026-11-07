@@ -19,3 +19,14 @@ To skip the quiz and use your own coordinates, pass seven values in **Market**, 
 ```sh
 cargo run -- --vector 0.25 -0.50 0.10 0.75 0.40 -0.20 0.60
 ```
+
+## Web frontend
+
+The React + Tailwind frontend is a standalone browser experience. It uses the same 84 quiz prompts and seven axes as the Rust CLI; answers and profile calculations stay in the browser.
+
+```sh
+npm install
+npm run dev
+```
+
+Run `npm run build` to create the production bundle in `dist/`.
