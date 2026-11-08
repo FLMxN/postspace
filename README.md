@@ -1,4 +1,4 @@
-﻿# Postspace
+# Postspace
 
 Postspace is a browser-only political profile quiz with 84 questions, seven axes, ideological matches, and nearby public figures. Answers and calculations stay in the browser; the site does not need a server or API.
 
@@ -15,15 +15,13 @@ Create the static production site in `dist/` with:
 npm run build
 ```
 
-The contents of `dist/` are plain static HTML, CSS, JavaScript, and assets. They can be served by GitHub Pages or any static file host.
+The contents of `dist/` are static HTML, CSS, JavaScript, and assets, ready for GitHub Pages or another static host.
 
 ## Publish on GitHub Pages
 
-1. Push this repository to GitHub on the `main` branch.
-2. In **Settings → Pages → Build and deployment**, choose **GitHub Actions** as the source.
-3. The included workflow builds the site and publishes `dist/` after each push to `main`. You can also start it from the **Actions** tab with **Run workflow**.
+In **Settings → Pages → Build and deployment**, choose **GitHub Actions** as the source. The included workflow builds and publishes `dist/` after each push to `main` or `master`; you can also start it from the **Actions** tab.
 
-The Vite build uses relative asset paths, so it works both at a custom domain and at the usual `https://<user>.github.io/<repository>/` address.
+Relative asset paths support both a custom domain and the usual `https://<user>.github.io/<repository>/` address.
 
 ## Rust CLI
 
