@@ -1,32 +1,30 @@
-<div align="center">
+﻿# Postspace
 
-# Postspace
+Postspace is a browser-only political profile quiz with 84 questions, seven axes, ideological matches, and nearby public figures. Answers and calculations stay in the browser; the site does not need a server or API.
 
-Welcome to politics, ***sibling***.
-
-</div>
-
-**Postspace** is a terminal quiz that sketches your political profile through 84 shuffled questions.
-
-Answer with yes, no, or neutral; your answers are grouped across seven axes: **Market**, **Liberty**, **Progressivism**, **Transhumanism**, **Democracy**, **Delusionality**, and **Revolutionism**.
-
-At the end, **Postspace** prints your scores, highlights ideological labels that match your profile, and lists the three closest figures by euclidean vector similarity. It is a playful comparison tool, not a scientific assessment or a definitive label.
-
-Run with `cargo run`. Each result also generates a 3:4 PNG card in `cards/`.
-
-To skip the quiz and use your own coordinates, pass seven values in **Market**, **Liberty**, **Progressivism**, **Transhumanism**, **Democracy**, **Delusionality**, **Revolutionism** order. Each value must be between `-1` and `1`:
+## Run locally
 
 ```sh
-cargo run -- --vector 0.25 -0.50 0.10 0.75 0.40 -0.20 0.60
-```
-
-## Web frontend
-
-The React + Tailwind frontend is a standalone browser experience. It uses the same 84 quiz prompts and seven axes as the Rust CLI; answers and profile calculations stay in the browser.
-
-```sh
-npm install
+npm ci
 npm run dev
 ```
 
-Run `npm run build` to create the production bundle in `dist/`.
+Create the static production site in `dist/` with:
+
+```sh
+npm run build
+```
+
+The contents of `dist/` are plain static HTML, CSS, JavaScript, and assets. They can be served by GitHub Pages or any static file host.
+
+## Publish on GitHub Pages
+
+1. Push this repository to GitHub on the `main` branch.
+2. In **Settings → Pages → Build and deployment**, choose **GitHub Actions** as the source.
+3. The included workflow builds the site and publishes `dist/` after each push to `main`. You can also start it from the **Actions** tab with **Run workflow**.
+
+The Vite build uses relative asset paths, so it works both at a custom domain and at the usual `https://<user>.github.io/<repository>/` address.
+
+## Rust CLI
+
+The separate Rust CLI can still be run with `cargo run`. It is not needed to build or host the website.
