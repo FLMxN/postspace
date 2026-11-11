@@ -6,6 +6,14 @@ import questionsRu from './questions.ru.json'
 import { rustFigures, rustIdeas } from './rust-data.js'
 import './style.css'
 
+const getStoredLang = () => {
+  try {
+    return localStorage.getItem('postspace-lang') === 'en' ? 'en' : 'ru'
+  } catch {
+    return 'ru'
+  }
+}
+
 const axisData = [
   { en: ['Market', 'State-directed', 'Free market'], ru: ['Рынок', 'Плановая экономика', 'Свободный рынок'], color: '#f0a166' },
   { en: ['Liberty', 'Authority', 'Individual liberty'], ru: ['Свобода', 'Авторитет', 'Личная свобода'], color: '#80a9ee' },
@@ -20,15 +28,15 @@ const ui = {
     header: 'ПОЛИТИЧЕСКАЯ КАРТА', custom: 'Свой вектор', eyebrow: 'ИССЛЕДОВАНИЕ ВЗГЛЯДОВ',
     titleA: 'В каком', titleB: 'мире ты', titleC: 'хочешь жить?', lead: 'Политика — это не одна линия. Ответь на 84 вопроса и посмотри, как твои взгляды складываются в карту.',
     start: 'Пройти тест', duration: 'около 7 минут', questions: '84 вопроса', curiosity: 'Любопытство — хорошее начало.', philosophy: 'ФИЛОСОФИЯ', coordinates: 'В КООРДИНАТАХ', planet: 'ЛИЧНОЕ', political: 'ПОЛИТИЧЕСКОЕ', map: 'КАРТА ВАШИХ', beliefs: 'УБЕЖДЕНИЙ', seven: 'СЕМЬ ОСЕЙ', more: '+ ещё три измерения', flat: 'ИДЕИ НЕ ПОМЕЩАЮТСЯ НА ПЛОСКОСТИ',
-    backHome: 'На главную', back: 'Назад', question: 'ВОПРОС', noRight: 'Здесь нет правильных ответов. Выбери вариант, который ближе к твоему мнению.', yes: 'Да', agree: 'В целом согласен', neutral: 'Не уверен', neither: 'Скорее нейтрально', no: 'Нет', disagree: 'В целом не согласен', private: 'ТВОИ ОТВЕТЫ ОСТАЮТСЯ У ТЕБЯ', answers: 'ОТВЕТОВ',
+    backHome: 'На главную', back: 'Назад', question: 'ВОПРОС', noRight: 'Здесь нет правильных ответов. Выбери вариант, который ближе всего к твоим взглядам.', yes: 'Да', agree: 'Скорее да', neutral: 'Нейтрально', neither: 'Ни да, ни нет', no: 'Нет', disagree: 'Скорее нет',
     result: 'ТВОЯ КАРТА ВЗГЛЯДОВ', point: 'Твоя точка', onMap: 'на карте.', resultLead: 'Профиль собран из семи независимых координат. Это повод подумать, а не ярлык.', share: 'Поделиться профилем', copied: 'Скопировано', ownVector: 'Свой вектор', resetVector: 'Сбросить к результату теста', axes: 'КООРДИНАТЫ', dimensions: 'Семь измерений', balanced: 'БАЛАНС', intersections: 'ПЕРЕСЕЧЕНИЯ', closeTo: 'Тебе близко', closeDesc: 'Идеи, с которыми пересекаются твои координаты.', empty: 'Профиль между течениями — любопытное место.', disclaimer: 'Совпадения основаны на простых порогах и не являются точной классификацией.', neighbors: 'СОСЕДСТВО', figures: 'Близкие фигуры', figuresDesc: 'Похожие векторы среди публичных фигур.', complex: 'Политические взгляды сложнее любой карты.', restart: 'Начать заново', notScience: 'НЕ НАУЧНЫЙ ТЕСТ', footer: 'ИССЛЕДОВАНИЕ ПОЛИТИЧЕСКИХ ИДЕЙ', coordinate: 'Координата',
   },
   en: {
     header: 'A MAP OF POLITICAL IDEAS', custom: 'Custom vector', eyebrow: 'A STUDY OF YOUR VIEWS',
     titleA: 'What is', titleB: 'your', titleC: 'ideal world?', lead: 'Politics is more than a single line. Answer 84 questions and see how your views take shape on a map.',
     start: 'Take the quiz', duration: 'about 7 minutes', questions: '84 questions', curiosity: 'Curiosity is a good place to start.', philosophy: 'PHILOSOPHY', coordinates: 'IN COORDINATES', planet: 'PERSONAL', political: 'POLITICAL', map: 'A MAP OF', beliefs: 'WHAT YOU BELIEVE', seven: 'SEVEN AXES', more: '+ three more dimensions', flat: 'IDEAS DO NOT FIT ON A FLAT PLANE',
-    backHome: 'Home', back: 'Back', question: 'QUESTION', noRight: 'There are no right answers. Choose the option closest to what you think.', yes: 'Yes', agree: 'Generally agree', neutral: 'Not sure', neither: 'Somewhere in between', no: 'No', disagree: 'Generally disagree', private: 'YOUR ANSWERS STAY WITH YOU', answers: 'ANSWERS',
-    result: 'YOUR MAP OF POLITICAL VIEWS', point: 'Your point', onMap: 'on the map.', resultLead: 'Your profile brings together seven independent coordinates. It is a prompt for reflection, not a label.', share: 'Share your profile', copied: 'Copied', ownVector: 'Custom vector', resetVector: 'Reset to quiz result', axes: 'COORDINATES', dimensions: 'Seven dimensions', balanced: 'BALANCE', intersections: 'INTERSECTIONS', closeTo: 'Ideas you may share', closeDesc: 'Ideas that intersect with your coordinates.', empty: 'Somewhere between currents — an interesting place to be.', disclaimer: 'Matches use simple thresholds and are not a precise classification.', neighbors: 'NEIGHBORS', figures: 'Nearby figures', figuresDesc: 'Similar vectors among public figures.', complex: 'Political views are more complex than any map.', restart: 'Start over', notScience: 'NOT A SCIENTIFIC TEST', footer: 'AN EXPLORATION OF POLITICAL IDEAS', coordinate: 'Coordinate',
+    backHome: 'Home', back: 'Back', question: 'QUESTION', noRight: 'There are no right answers. Choose the option closest to what you think.', yes: 'Yes', agree: 'Generally agree', neutral: 'Not sure', neither: 'Neither', no: 'No', disagree: 'Generally disagree',
+    result: 'YOUR MAP OF POLITICAL VIEWS', point: 'Your point', onMap: 'on the map.', resultLead: 'Your profile brings together seven independent coordinates. It is a prompt for reflection, not a label.', share: 'Share profile', copied: 'Copied', ownVector: 'Custom vector', resetVector: 'Reset to quiz result', axes: 'COORDINATES', dimensions: 'Seven dimensions', balanced: 'BALANCE', intersections: 'INTERSECTIONS', closeTo: 'Close to you', closeDesc: 'Ideas intersecting with your coordinates.', empty: 'Your profile sits between currents — a curious place.', disclaimer: 'Matches are based on simple thresholds and are not a precise classification.', neighbors: 'NEIGHBORHOOD', figures: 'Close figures', figuresDesc: 'Similar vectors among public figures.', complex: 'Political views are more complex than any map.', restart: 'Start over', notScience: 'NOT A SCIENTIFIC TEST', footer: 'A STUDY OF POLITICAL IDEAS', coordinate: 'Coordinate',
   },
 }
 const figures = rustFigures.map(f => ({ ...f, ru: f.name, en: f.name }))
@@ -37,7 +45,7 @@ const dot=(a,b)=>a.reduce((s,x,i)=>s+(x-b[i])**2,0)
 const cosineSimilarity=(a,b)=>{const product=a.reduce((sum,x,i)=>sum+x*b[i],0);const normA=Math.sqrt(a.reduce((sum,x)=>sum+x*x,0));const normB=Math.sqrt(b.reduce((sum,x)=>sum+x*x,0));return normA*normB===0?0:product/(normA*normB)}
 
 function App() {
-  const [lang,setLang]=useState(()=>localStorage.getItem('postspace-lang')==='en'?'en':'ru')
+  const [lang,setLang]=useState(getStoredLang)
   const [screen,setScreen]=useState('home'),[answers,setAnswers]=useState({}),[index,setIndex]=useState(0)
   const [vector,setVector]=useState(null),[custom,setCustom]=useState(false),[copied,setCopied]=useState(false)
   const t=ui[lang], axes=axisData.map(a=>({name:a[lang][0],left:a[lang][1],right:a[lang][2],en:a.en[0]}))
@@ -47,7 +55,7 @@ function App() {
   const result=useMemo(()=>vector??axisData.map((_,ai)=>{let score=0,count=0;questionsEn.forEach((q,i)=>{if(q.axis===ai&&answers[i]!==undefined){score+=answers[i]*q.pole;count++}});return count?Math.max(-1,Math.min(1,score/count)):0}),[vector,answers])
   const matches=useMemo(()=>ideas.filter(([, ,rule])=>rule(result)),[result])
   const nearest=useMemo(()=>figures.map(f=>{const distance=dot(result,f.v);const distanceScore=1-distance/28;const score=distanceScore*cosineSimilarity(result,f.v);return {...f,distance,score,similarity:Math.max(0,Math.min(100,Math.round(score*100)))}}).sort((a,b)=>b.score-a.score||a.distance-b.distance).slice(0,5),[result])
-  const switchLanguage=()=>{const next=lang==='ru'?'en':'ru';setLang(next);localStorage.setItem('postspace-lang',next);document.documentElement.lang=next}
+  const switchLanguage=()=>{const next=lang==='ru'?'en':'ru';setLang(next);try{localStorage.setItem('postspace-lang',next)}catch{};document.documentElement.lang=next}
   const answer=value=>{const next={...answers,[index]:value};setAnswers(next);if(index<questions.length-1)setIndex(index+1);else{setVector(null);setScreen('result')}}
   const begin=()=>{setAnswers({});setIndex(0);setVector(null);setScreen('quiz')}
   const reset=()=>{setScreen('home');setAnswers({});setIndex(0);setVector(null);setCustom(false)}
@@ -63,4 +71,8 @@ function App() {
   </div>
 }
 
-createRoot(document.getElementById('root')).render(<React.StrictMode><App/></React.StrictMode>)
+const root = document.getElementById('root')
+if (!root) {
+  throw new Error('Root element #root not found')
+}
+createRoot(root).render(<React.StrictMode><App/></React.StrictMode>)
