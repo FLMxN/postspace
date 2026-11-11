@@ -78,6 +78,7 @@ pub const FIGURES: &[Figure] = &[
     profile("Hakim Bey", -0.60, 0.95, 0.40, -0.30, 0.85, 0.7, 0.8),
     profile("Bob Black", -0.70, 0.90, 0.20, -0.40, 0.80, -0.2, 0.7),
     profile("John Zerzan", -0.85, 0.70, -0.10, -0.95, 0.60, -0.2, 0.9),
+    profile("Ted Kaczynski", -0.75, 0.10, -0.85, -1.00, -0.50, -0.4, 0.9),
     // ── Left accelerationism / Post-capitalism ─────────────────────────
     profile("Nick Srnicek", -0.50, 0.55, 0.75, 0.65, 0.75, 0.2, 0.5),
     profile("Alex Williams", -0.55, 0.55, 0.75, 0.65, 0.75, 0.2, 0.5),
@@ -87,6 +88,11 @@ pub const FIGURES: &[Figure] = &[
     profile("Jack Donovan", -0.15, -0.70, -0.80, -0.10, -0.70, 0.1, 0.1),
     profile("Michael Malice", 0.30, 0.80, 0.15, 0.10, 0.50, -0.4, 0.2),
     profile("Kantbot", 0.10, -0.75, -0.80, 0.15, -0.75, 0.6, 0.1),
+    // ── Alt-internet traditionalist / vitalist voices ────────────────
+    profile("Raw Egg Nationalist", -0.35, -0.70, -0.85, -0.65, -0.65, 0.1, 0.2),
+    profile("Zero HP Lovecraft", -0.25, -0.70, -0.80, -0.55, -0.70, 0.5, 0.2),
+    profile("The Golden One", -0.30, -0.85, -0.90, -0.75, -0.75, 0.2, 0.2),
+    profile("Sol Brah", -0.35, -0.65, -0.75, -0.55, -0.60, 0.2, 0.1),
     // ── Post‑right / identitarian ──────────────────────────
     profile(
         "Bronze Age Pervert (Costin Alamariu)",
@@ -114,6 +120,7 @@ pub const FIGURES: &[Figure] = &[
     // ── Speculative realism / Posthumanism ──────────────────────────────
     profile("Reza Negarestani", -0.10, 0.30, 0.45, 0.85, 0.25, 0.9, 0.1),
     profile("Ray Brassier", -0.10, 0.40, 0.25, 0.65, 0.20, 0.7, 0.1),
+    profile("Ubermarginal", -0.45, 0.65, 0.45, 0.35, 0.55, 0.85, 0.45),
     // ── Classical liberal / libertarian / techno‑optimist ──────────────
     profile("Ayn Rand", 0.95, 0.90, -0.40, 0.35, 0.15, -0.6, -0.4),
     profile("Peter Thiel", 0.90, 0.75, -0.55, 0.95, -0.55, -0.2, -0.1),
@@ -220,6 +227,7 @@ pub const FIGURES: &[Figure] = &[
     profile("Xi Jinping", -0.45, -0.95, -0.65, 0.35, -0.95, -0.4, -0.5),
     // ── Russian / CIS information space ────────────────────────────────
     profile("Eduard Limonov", -0.80, -0.90, -0.60, 0.00, -0.80, 0.3, 0.8),
+    profile("Nestor Makhno", -0.85, 0.85, 0.20, -0.10, 0.75, -0.2, 1.0),
     profile(
         "Dmitry Puchkov (Goblin)",
         0.20,

@@ -190,7 +190,7 @@ fn parse_vector_args(args: &[String]) -> Result<Option<[f64; Axis::ALL.len()]>, 
 
 fn print_usage() {
     println!(
-        "Usage: postspace [--vector <market> <liberty> <progressivism> <transhumanism> <democracy> <delusionality> <revolutionism>]"
+        "Usage: postspace [--vector <market> <liberty> <progressivism> <transhumanism> <democracy> <conformism> <revolutionism>]"
     );
     println!("Without arguments, start the interactive quiz. Use --help for this message.");
 }

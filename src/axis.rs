@@ -39,7 +39,7 @@ impl Axis {
             Self::Progressivism => "Progressivism",
             Self::Transhumanism => "Transhumanism",
             Self::Democracy => "Democracy",
-            Self::Delusionality => "Delusionality",
+            Self::Delusionality => "Conformism",
             Self::Revolutionism => "Revolutionism",
         }
     }
@@ -51,7 +51,7 @@ impl Axis {
             Self::Progressivism => "progressive",
             Self::Transhumanism => "enhancement",
             Self::Democracy => "democracy",
-            Self::Delusionality => "delusionality",
+            Self::Delusionality => "post-structuralist",
             Self::Revolutionism => "revolution",
         }
     }
@@ -63,7 +63,7 @@ impl Axis {
             Self::Progressivism => "traditionalist",
             Self::Transhumanism => "naturalist",
             Self::Democracy => "autocracy",
-            Self::Delusionality => "groundedness",
+            Self::Delusionality => "conventional",
             Self::Revolutionism => "reformism",
         }
     }

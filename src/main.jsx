@@ -12,7 +12,7 @@ const axisData = [
   { en: ['Progressivism', 'Tradition', 'Progress'], ru: ['Прогресс', 'Традиция', 'Прогресс'], color: '#bc91e9' },
   { en: ['Transhumanism', 'Naturalism', 'Enhancement'], ru: ['Технологии', 'Естественность', 'Улучшение'], color: '#69c6ab' },
   { en: ['Democracy', 'Autocracy', 'Democracy'], ru: ['Демократия', 'Автократия', 'Демократия'], color: '#ed809a' },
-  { en: ['Openness', 'Groundedness', 'WTF'], ru: ['Ясность', 'Практичность', 'Абстрактность'], color: '#a2a25d' },
+  { en: ['Conformism', 'Conventional', 'Post-structuralist'], ru: ['Конформизм', 'Конвенционализм', 'Постструктурализм'], color: '#a2a25d' },
   { en: ['Revolutionism', 'Reform', 'Revolution'], ru: ['Перемены', 'Реформы', 'Революция'], color: '#df8b6c' },
 ]
 const ui = {
